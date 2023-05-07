@@ -1,0 +1,83 @@
+{
+    "telemetry.telemetryLevel": "off",
+    // GIT
+    "git.inputValidationSubjectLength": 50,
+    // TERMINAL
+    "terminal.integrated.fontSize": 14,
+    // EDITOR: General
+    "editor.fontSize": 14,
+    "editor.lineHeight": 22,
+    "editor.linkedEditing": true,
+    "editor.minimap.enabled": false,
+    "editor.tabCompletion": "on",
+    "editor.cursorStyle": "line",
+    "editor.cursorBlinking": "phase",
+    "editor.renderWhitespace": "all",
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        180
+    ],
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true,
+        "source.fixAll": true,
+    },
+    // EDITOR: Window
+    "window.title": "${activeEditorLong}${separator}${rootName}",
+    // EDITOR: Breadcrumps
+    "breadcrumbs.enabled": true,
+    // EDITOR: Diffeditor
+    "diffEditor.ignoreTrimWhitespace": false,
+    // EDITOR: Workbench
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#393939",
+        "editorUnnecessaryCode.border": "#dd7aab"
+    },
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.startupEditor": "none",
+    "workbench.editor.highlightModifiedTabs": true,
+    // LANGUAGE
+    "javascript.preferences.quoteStyle": "single",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "javascript.preferences.importModuleSpecifier": "relative",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "typescript.preferences.quoteStyle": "single",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "css.lint.important": "warning",
+    "scss.lint.important": "warning",
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // FILES AND SEARCH
+    "files.exclude": {
+        "**/bin": true,
+        "**/.git": true,
+        "**/node": true,
+        "**/bower_components": true,
+        "**/tmp": true,
+        "**/coverage": true,
+        "**/.DS_Store": true
+    },
+    // EXT: Prettier
+    "prettier.useEditorConfig": true,
+    "prettier.requireConfig": true,
+    "prettier.prettierPath": "./node_modules/prettier",
+    // EXT: Gitlens
+    "gitlens.plusFeatures.enabled": false,
+    "gitlens.showWelcomeOnInstall": false,
+    // EXT:YAML
+    "yaml.extension.recommendations": false,
+    "yaml.format.singleQuote": true
+}
