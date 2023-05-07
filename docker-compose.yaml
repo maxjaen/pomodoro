@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    container_name: postgres-rel-database
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    container_name: node_backend_app
+    build: ./backend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres_db
+    networks:
+      - my-network
+
+  frontend:
+    container_name: react_frontend_app
+    build: ./frontend
+    restart: always
+    ports:
+      - "3030:3000"
+    depends_on:
+      - backend
+    networks:
+      - my-network
+    volumes:
+      - '.:/frontend'
+      - '/frontend/node_modules'
+    stdin_open: true
+
+networks:
+  my-network:
