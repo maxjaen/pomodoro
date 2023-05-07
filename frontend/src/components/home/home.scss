@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
+
+@mixin FlexParent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .clock {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 500px;
+
+    .timer,
+    .board {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .clock {
+    .timer {
+      width: 300px;
+      margin-right: 50px;
+    }
+    .board {
+      width: 400px;
+    }
+  }
+}
+
+$board-btn-bg-color: #a4979730;
+$board-btn-bg-hover-color: #ffffff31;
+
+.state-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: inherit;
+  overflow-y: auto;
+
+  &.state-pomodoro {
+    background-color: var(--red-color);
+  }
+
+  &.state-pause-short {
+    background-color: var(--blue-color);
+  }
+
+  &.state-pause-long {
+    animation: rainbow-bg 15s linear;
+    animation-iteration-count: infinite;
+  }
+
+  .clock {
+    @include FlexParent;
+    width: 90%;
+    margin-top: 100px;
+
+    .timer {
+      @include FlexParent;
+      height: 300px;
+      color: var(--white-color);
+      font-size: 100px;
+      font-family: "Shadows Into Light", cursive;
+    }
+
+    .board {
+      height: 300px;
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .board-top,
+      .board-middle,
+      .board-bottom {
+        height: 20%;
+      }
+
+      .board-top,
+      .board-middle {
+        margin-bottom: 5%;
+      }
+
+      .board-top {
+        display: flex;
+        gap: 5%;
+
+        .board-btn {
+          height: 100%;
+          width: 30%;
+        }
+      }
+
+      .board-middle {
+        .board-btn {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .board-bottom {
+        color: var(--white-color);
+        font-size: 20px;
+        font-weight: 700;
+
+        .board-btn {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .board-btn {
+        @include FlexParent;
+        background-color: $board-btn-bg-color;
+        cursor: pointer;
+      }
+
+      .board-btn:hover {
+        background-color: $board-btn-bg-hover-color;
+      }
+    }
+  }
+}
+
+@keyframes rainbow-bg {
+  100%,
+  0% {
+    background-color: rgb(189, 2, 2);
+  }
+  8% {
+    background-color: rgb(184, 92, 0);
+  }
+  16% {
+    background-color: rgb(143, 143, 0);
+  }
+  41% {
+    background-color: rgb(0, 158, 79);
+  }
+  50% {
+    background-color: rgb(7, 173, 173);
+  }
+  58% {
+    background-color: rgb(0, 127, 255);
+  }
+  75% {
+    background-color: rgb(127, 0, 255);
+  }
+  83% {
+    background-color: rgb(158, 2, 158);
+  }
+  91% {
+    background-color: rgb(189, 5, 97);
+  }
+}
