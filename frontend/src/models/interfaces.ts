@@ -1,10 +1,15 @@
-interface Pomodoro {
+import { State } from './enums';
+
+export interface Pomodoro {
   id: number;
   goal: string;
 }
 
-interface PomodoroCreate {
+export interface PomodoroCreate {
   goal: string;
 }
 
-export type { Pomodoro, PomodoroCreate };
+export interface StateUpdate {
+  createdAt: Date;
+  state: State;
+}

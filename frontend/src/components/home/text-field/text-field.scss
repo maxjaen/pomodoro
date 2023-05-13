@@ -1,0 +1,26 @@
+@media screen and (max-width: 1000px) {
+  .text-field {
+    max-width: 373px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .text-field {
+    max-width: 750px;
+  }
+}
+
+.text-field {
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+
+  .text-field-label {
+    color: var(--white-color);
+    margin-bottom: 5px;
+  }
+
+  .text-field-input {
+    height: 30px;
+  }
+}

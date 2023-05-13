@@ -1,123 +1,57 @@
 import { useEffect, useState } from 'react';
-import { delay, toSeconds, toStringMMSS } from './home-utils';
+import { State } from '../../models/enums';
+import { Pomodoro, StateUpdate } from '../../models/interfaces';
+import { addPomodoro, getPomodoros } from '../../services/pomodoro-service';
+import Clock from './clock/clock';
 import './home.scss';
+import { PomodoroList } from './pomodoro-list/pomodoro-list';
+import { TextField } from './text-field/text-field';
 
 const PAGE_TITLE = 'Pomodoro App';
 
 const Home = () => {
-  const [states] = useState({
-    pomodoro: { componentName: 'state-pomodoro', min: 25 },
-    shortBreak: { componentName: 'state-pause-short', min: 5 },
-    longBreak: { componentName: 'state-pause-long', min: 25 },
-  });
-  const [state, setState] = useState(states.pomodoro);
-  const [pomodoroCount, setPomodoroCount] = useState(0);
-  const [remainingSeconds, setRemainingSeconds] = useState(toSeconds(state.min));
-  const [isActive, setActive] = useState(false);
-  const isPomodoro = (state: any) => state.componentName === 'pomodoro';
+  const [pomodoros, setPomodoros] = useState<Pomodoro[]>([]);
+  const [stateContainerClass, setStateContainerClass] = useState('state-pomodoro');
+  const [goal, setGoal] = useState('');
 
   useEffect(() => {
     document.title = PAGE_TITLE;
 
-    if (isActive && remainingSeconds > 0) {
-      setTimeout(() => {
-        setRemainingSeconds((seconds: number) => seconds - 1);
-      }, 1000);
-    }
+    fetchPomodoros();
+  }, []);
 
-    if (remainingSeconds < 1) {
-      if (isPomodoro(state)) {
-        setPomodoroCount(pomodoro => pomodoro + 1);
-      }
-
-      const transitionToNextState = () => {
-        setActive(true);
-
-        if (isPomodoro(state)) {
-          if (pomodoroCount !== 0 && (pomodoroCount + 1) % 4 === 0) {
-            changeState(states.longBreak);
-          } else {
-            changeState(states.shortBreak);
-          }
-        } else {
-          changeState(states.pomodoro);
-        }
-      };
-      transitionToNextState();
-    }
-  }, [isActive, remainingSeconds, state, pomodoroCount, states.longBreak, states.shortBreak, states.pomodoro]);
-
-  const start = () => {
-    if (!isActive) {
-      setActive(true);
-      setRemainingSeconds((seconds: number) => seconds - 1);
-    } else {
-      console.warn('Timer already active');
-    }
+  const fetchPomodoros = async () => {
+    await getPomodoros().then(pomodoros => {
+      setPomodoros(pomodoros.data);
+    });
   };
 
-  const stop = () => {
-    if (remainingSeconds > 10) {
-      setActive(false);
-    } else {
-      console.warn('Cannot stop timer with less than 10 seconds.');
-    }
+  const handleStateContainerClassChange = (stateContainerClass: string) => {
+    setStateContainerClass(stateContainerClass);
   };
 
-  const toggleRunning = () => {
-    if (!isActive) {
-      start();
-    } else {
-      stop();
-    }
+  const handleStateUpdate = async (stateUpdate: StateUpdate) => {
+    addPomodoro({ goal: State[stateUpdate.state] + ' ' + goal }).then(response => {
+      console.log(response.status, response.data);
+      fetchPomodoros();
+    });
   };
 
-  const changeState = async (state: any) => {
-    await delay(1500);
-
-    setState(state);
-    setRemainingSeconds(toSeconds(state.min));
+  const handleGoalUpdate = (goal: string) => {
+    setGoal(goal);
   };
 
   return (
-    <div className={'state-container ' + state.componentName}>
-      <div className="clock">
-        <div className="timer">{toStringMMSS(remainingSeconds)}</div>
-        <div className="board">
-          <div className="board-top">
-            <div
-              className="board-btn"
-              onClick={() => {
-                setActive(false);
-                changeState(states.pomodoro);
-              }}
-              data-testid="pomodoro-button"
-            ></div>
-            <div
-              className="board-btn"
-              onClick={() => {
-                setActive(false);
-                changeState(states.shortBreak);
-              }}
-              data-testid="short-break-button"
-            ></div>
-            <div
-              className="board-btn"
-              onClick={() => {
-                setActive(false);
-                changeState(states.longBreak);
-              }}
-              data-testid="long-break-button"
-            ></div>
-          </div>
-          <div className="board-middle">
-            <div className="board-btn" onClick={toggleRunning} data-testid="running-button"></div>
-          </div>
-          <div className="board-bottom">
-            <div className="board-btn" data-testid="toggle-settings-button">
-              {pomodoroCount + ' Pomodoro(s)'}
-            </div>
-          </div>
+    <div className={'state-container ' + stateContainerClass}>
+      <div className="home-elements">
+        <div className="home-element">
+          <Clock onChangeStateContainerClass={handleStateContainerClassChange} onChangeStateUpdate={handleStateUpdate} />
+        </div>
+        <div className="home-element">
+          <TextField onChange={handleGoalUpdate} label="Goal" />
+        </div>
+        <div className="home-element">
+          <PomodoroList pomodoros={pomodoros} />
         </div>
       </div>
     </div>
