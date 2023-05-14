@@ -50,9 +50,11 @@ const Home = () => {
         <div className="home-element">
           <TextField onChange={handleGoalUpdate} label="Goal" />
         </div>
-        <div className="home-element">
-          <PomodoroList pomodoros={pomodoros} />
-        </div>
+        {pomodoros.length > 0 && (
+          <div className="home-element">
+            <PomodoroList pomodoros={pomodoros} />
+          </div>
+        )}
       </div>
     </div>
   );

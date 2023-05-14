@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
+import { ReactComponent as CoffeeIcon } from '../../../assets/icons/coffee.svg';
+import { ReactComponent as ControllerIcon } from '../../../assets/icons/controller.svg';
+import { ReactComponent as PlayIcon } from '../../../assets/icons/play.svg';
+import { ReactComponent as SmartToyIcon } from '../../../assets/icons/smart_toy.svg';
+import { ReactComponent as StopIcon } from '../../../assets/icons/stop.svg';
 import { State } from '../../../models/enums';
 import { StateUpdate } from '../../../models/interfaces';
 import { delay, toSeconds, toStringMMSS } from '../home-utils';
 import './clock.scss';
 
+const ICON_COLOR = 'white';
 const PAGE_TITLE = 'Pomodoro App';
 
 interface ClockProperties {
-  onChangeStateContainerClass: Function;
+  onChangeStateContainerClass: (stateContainerClass: string) => void;
   onChangeStateUpdate: (stateUpdate: StateUpdate) => void;
 }
 
@@ -98,28 +104,31 @@ const Clock: React.FC<ClockProperties> = props => {
               updateStateOnClick(states.pomodoro);
             }}
             data-testid="pomodoro-button"
-          ></div>
+          >
+            <SmartToyIcon fill={ICON_COLOR} />
+          </div>
           <div
             className="board-btn"
             onClick={() => {
               updateStateOnClick(states.shortBreak);
             }}
             data-testid="short-break-button"
-          ></div>
+          >
+            <CoffeeIcon fill={ICON_COLOR} />
+          </div>
           <div
             className="board-btn"
             onClick={() => {
               updateStateOnClick(states.longBreak);
             }}
             data-testid="long-break-button"
-          ></div>
-        </div>
-        <div className="board-middle">
-          <div className="board-btn" onClick={toggleRunning} data-testid="running-button"></div>
+          >
+            <ControllerIcon fill={ICON_COLOR} />
+          </div>
         </div>
         <div className="board-bottom">
-          <div className="board-btn" data-testid="toggle-settings-button">
-            {pomodoroCount + ' Pomodoro(s)'}
+          <div className="board-btn" onClick={toggleRunning} data-testid="running-button">
+            {isActive ? <StopIcon fill={ICON_COLOR} /> : <PlayIcon fill={ICON_COLOR} />}
           </div>
         </div>
       </div>

@@ -8,12 +8,13 @@ type PomodoroListProperties = {
 
 export const PomodoroList: React.FC<PomodoroListProperties> = ({ pomodoros }) => {
   return (
-    <div className="pomodoro-list">
+    <table className="pomodoro-list">
       {pomodoros.map(pomodoro => (
-        <div className="pomodoro-list-entry" key={pomodoro.id}>
-          {pomodoro.id} {pomodoro.goal}
-        </div>
+        <tr className="pomodoro-list-entry" key={pomodoro.id}>
+          <td>{pomodoro.id}</td>
+          <td>{pomodoro.goal}</td>
+        </tr>
       ))}
-    </div>
+    </table>
   );
 };

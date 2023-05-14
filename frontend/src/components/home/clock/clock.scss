@@ -14,6 +14,7 @@
 
     .timer,
     .board {
+      height: 175px;
       width: 100%;
     }
   }
@@ -36,31 +37,29 @@ $board-btn-bg-hover-color: #ffffff31;
 
 .clock {
   @include FlexParent;
-  margin-top: 100px;
+  width: inherit;
+  margin-top: 20px;
 
   .timer {
     @include FlexParent;
-    height: 300px;
     color: var(--white-color);
     font-size: 100px;
     font-family: "Shadows Into Light", cursive;
   }
 
   .board {
-    height: 300px;
     min-width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     .board-top,
-    .board-middle,
     .board-bottom {
-      height: 20%;
+      height: 60px;
     }
 
     .board-top,
-    .board-middle {
+    .board-bottom {
       margin-bottom: 5%;
     }
 
@@ -74,18 +73,7 @@ $board-btn-bg-hover-color: #ffffff31;
       }
     }
 
-    .board-middle {
-      .board-btn {
-        height: 100%;
-        width: 100%;
-      }
-    }
-
     .board-bottom {
-      color: var(--white-color);
-      font-size: 20px;
-      font-weight: 700;
-
       .board-btn {
         height: 100%;
         width: 100%;

@@ -1,3 +1,18 @@
+@media screen and (max-width: 1000px) {
+  .pomodoro-list {
+    max-width: 500px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .pomodoro-list {
+    max-width: 750px;
+  }
+}
+
 .pomodoro-list {
+  width: inherit;
   color: var(--white-color);
+  border: 2px solid var(--white-color);
+  padding: 10px;
 }
